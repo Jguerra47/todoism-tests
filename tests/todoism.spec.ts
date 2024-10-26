@@ -1,6 +1,10 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Todoism Test Suite', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('http://127.0.0.1:5000/#intro');
+  });
+
   test('Add a task', async ({ page }) => {
 
   });
