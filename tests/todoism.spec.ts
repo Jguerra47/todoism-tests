@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { HomePage } from '../pages/HomePage';
 import { ToDoPage } from '../pages/ToDoPage';
+import { assert } from 'console';
 
 test.describe('Todoism Test Suite', () => {
   let toDoPage: ToDoPage;
@@ -18,14 +19,17 @@ test.describe('Todoism Test Suite', () => {
   });
 
   test('Add a task', async ({ page }) => {
-    const task = "Random Task";
+    const task = "Creation Task";
     await toDoPage.createTask(task);
-    expect(await toDoPage.getTask(task)).toContain(task);
+    expect(await toDoPage.getTaskText(task)).toContain(task);
   });
 
-  // test('Complete a task', async ({ page }) => {
-
-  // });
+  test('Complete a task', async ({ page }) => {
+    const task = "Completion Task";
+    await toDoPage.createTask(task);
+    await toDoPage.completeTask(task);
+    expect(await toDoPage.getTaskCheckboxCompleted(task)).toBeVisible();
+  });
 
   // test('Clear tasks', async ({ page }) => {
 

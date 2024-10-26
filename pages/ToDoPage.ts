@@ -13,9 +13,27 @@ export class ToDoPage {
         await this.taskInput.fill(task);
         await this.taskInput.press('Enter');
     }
+
+    async completeTask(task: string): Promise<void> {
+        await this.getTask(task).locator("span[class='item-body']").click();
+    }
     
-    async getTask(task: string): Promise<string> {
-        return this.page.locator(`div[class='items'] >> div[data-body='${task}']`).innerText();
+    async getTaskText(task: string): Promise<string> {
+        return await this.getTask(task)
+            .innerText();
+    }
+
+    async getTaskCheckboxCompleted(task: string): Promise<Locator> {
+        return await this.getTask(task)
+            .locator("span[class='inactive-item']")
+    }
+
+    getTask(task: string): Locator {
+        return this.getTasks().locator(`div[data-body='${task}']`);
+    }
+
+    getTasks(): Locator {
+        return this.page.locator("div[class='items']")
     }
 
 }
