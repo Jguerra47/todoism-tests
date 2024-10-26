@@ -2,18 +2,18 @@ import { Page, Locator } from "@playwright/test";
 
 export class HomePage {
     readonly page: Page;
-    readonly loginButton: Locator;
+    readonly goToLoginButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
-        this.loginButton = page.locator("locator-to-define");
+        this.goToLoginButton = page.getByRole("navigation").getByRole("link", { name: "Login" });
     }
 
     async open() {
-        await this.page.goto("http://localhost:5000");
+        await this.page.goto("http://127.0.0.1:5000/");
     }
 
-    async clickLogin() {
-        await this.loginButton.click();
+    async goToLogin() {
+        await this.goToLoginButton.click();
     }
 }

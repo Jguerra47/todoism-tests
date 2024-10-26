@@ -1,21 +1,35 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/LoginPage';
+import { HomePage } from '../pages/HomePage';
+import { ToDoPage } from '../pages/ToDoPage';
 
 test.describe('Todoism Test Suite', () => {
+  let toDoPage: ToDoPage;
+
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://127.0.0.1:5000/#intro');
+    const homePage = new HomePage(page);
+    await homePage.open();
+    await homePage.goToLogin();
+
+    const loginPage = new LoginPage(page);
+    await loginPage.loginWithTestAccount();
+
+    toDoPage = new ToDoPage(page);
   });
 
   test('Add a task', async ({ page }) => {
-
+    const task = "Random Task";
+    await toDoPage.createTask(task);
+    expect(await toDoPage.getTask(task)).toContain(task);
   });
 
-  test('Complete a task', async ({ page }) => {
+  // test('Complete a task', async ({ page }) => {
 
-  });
+  // });
 
-  test('Clear tasks', async ({ page }) => {
+  // test('Clear tasks', async ({ page }) => {
 
-  });
+  // });
 
 });
 
