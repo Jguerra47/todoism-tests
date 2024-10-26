@@ -3,10 +3,12 @@ import { Page, Locator } from "@playwright/test";
 export class ToDoPage {
     readonly page: Page;
     readonly taskInput: Locator;
+    readonly clearTasksButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.taskInput = page.locator("input[id='item-input']");
+        this.clearTasksButton = this.clearTasksButton = page.locator("#clear-btn");;
     }
 
     async createTask(task: string): Promise<void> {
@@ -26,6 +28,10 @@ export class ToDoPage {
     async getTaskCheckboxCompleted(task: string): Promise<Locator> {
         return await this.getTask(task)
             .locator("span[class='inactive-item']")
+    }
+
+    async clearTasks(): Promise<void> {
+        await this.clearTasksButton.click();
     }
 
     getTask(task: string): Locator {

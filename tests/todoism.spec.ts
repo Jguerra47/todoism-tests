@@ -2,7 +2,6 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { HomePage } from '../pages/HomePage';
 import { ToDoPage } from '../pages/ToDoPage';
-import { assert } from 'console';
 
 test.describe('Todoism Test Suite', () => {
   let toDoPage: ToDoPage;
@@ -31,25 +30,12 @@ test.describe('Todoism Test Suite', () => {
     expect(await toDoPage.getTaskCheckboxCompleted(task)).toBeVisible();
   });
 
-  // test('Clear tasks', async ({ page }) => {
-
-  // });
+  test('Clear tasks', async ({ page }) => {
+    const task = "Clear Task";
+    await toDoPage.createTask(task);
+    await toDoPage.completeTask(task);
+    await toDoPage.clearTasks();
+    expect(await toDoPage.getTask(task)).toBeHidden();
+  });
 
 });
-
-// test('has title', async ({ page }) => {
-//   await page.goto('https://playwright.dev/');
-
-//   // Expect a title "to contain" a substring.
-//   await expect(page).toHaveTitle(/Playwright/);
-// });
-
-// test('get started link', async ({ page }) => {
-//   await page.goto('https://playwright.dev/');
-
-//   // Click the get started link.
-//   await page.getByRole('link', { name: 'Get started' }).click();
-
-//   // Expects page to have a heading with the name of Installation.
-//   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-// });
